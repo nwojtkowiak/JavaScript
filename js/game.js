@@ -2,6 +2,7 @@ let game = (function () {
 
     let initialNumberOfPieces = 4,
         level = 0,
+        points = 0,
         currentOfPieces,
 
         setPieces = function () {
@@ -34,9 +35,13 @@ let game = (function () {
             for (i = 0; i < currentOfPieces; i++) {
                 pieces.push({});
             }
-
+            let rands = [];
             for (i = 0; i < randNumbers; i++) {
-                rand = randPiece();
+
+                do {
+                    rand = randPiece();
+                } while (rands.includes(rand));
+                rands.push(rand);
                 pieces[rand].toGuess = true;
             }
             return pieces;
