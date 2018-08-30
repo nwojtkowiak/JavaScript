@@ -17,16 +17,18 @@ let controller = function () {
         },
 
         highlight = function(){
+        game.generateRandPieces();
             view.highlightPieces(game.getPieces());
         },
 
         addPiece = function () {
             game.addPiece();
+            view.draw(game.getLengthPieces()-1,1);
         },
 
         changeColor = function (id) {
             //alert("change color: "+id);
-            view.changeColor(id);
+            view.changeColor(id,game.getPieces());
         };
 
 

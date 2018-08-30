@@ -4,13 +4,13 @@ var view = function () {
             return 4;
         },
         draw = function (fromId, num) {
-            var i;
+            var i, element, piece;
             if (!num) {
                 num = getInitialNumberOfPieces();
             }
-            var element = document.getElementById("pieces");
-            for (i = fromId; i < num; i++) {
-                var piece = document.createElement("div");
+            element = document.getElementById("pieces");
+            for (i = fromId; i < fromId + num; i++) {
+                piece = document.createElement("div");
                 /*piece.innerHTML = " <rect  x={x} width='80' height='80' style='fill:white;stroke:black;stroke-width:5;opacity:0.5'/>";*/
                 piece.setAttribute("onclick", "controller.changeColor(" + i + ")");
                 piece.setAttribute("class", "piece");
@@ -19,20 +19,41 @@ var view = function () {
             }
         },
         highlightPieces = function (pieces) {
-            var i;
+            var i, element;
             for (i = 0; i < pieces.length; i++) {
                 if (pieces[i].toGuess) {
-                    var element = document.getElementById(i.toString());
+                    element = document.getElementById(i);
                     element.style.backgroundColor = "grey";
-                    setTimeout(function () {element.style.backgroundColor = "blue";}, 1000);
-
                 }
             }
+            unHighlightPieces(pieces);
         },
-        changeColor = function (id) {
+        unHighlightPieces = function (pieces) {
+            setTimeout(() => {
+                var i, element;
+                for (i = 0; i < pieces.length; i++) {
+                    if (pieces[i].toGuess) {
+                        element = document.getElementById(i);
+                        element.style.backgroundColor = "blue";
+                    }
+                }
+            }, 1000);
+        },
+        changeColor = function (id, pieces) {
             var element = document.getElementById(id);
+            element = document.getElementById(id.toString());
+            if (pieces[id].toGuess) {
+                element.style.backgroundColor = "green";
+                setTimeout(function () {
+                    element.style.backgroundColor = "blue";
+                }, 1000);
 
-            element.style.backgroundColor = "green";
+            } else {
+                element.style.backgroundColor = "red";
+                setTimeout(function () {
+                    element.style.backgroundColor = "blue";
+                }, 1000);
+            }
         };
 
 

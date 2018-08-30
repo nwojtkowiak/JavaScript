@@ -9,16 +9,19 @@ let game = (function () {
 
 
         countNumberOfHighlight = function () {
-        return game.getLengthPieces() - 3 - game.getLevel();
+            return game.getLengthPieces() - 3 - game.getLevel();
         },
+
         randPiece = function () {
             var rand = Math.random() * game.getLengthPieces();
             return Math.ceil(rand - 1);
         },
+
         generateRandPieces = function () {
             let randNumbers = countNumberOfHighlight();
-            console.log("randNumbers: " +randNumbers);
             let rand, i;
+            console.log("randNumbers: " + randNumbers);
+
             randPieces = [];
 
             for (i = 0; i < randNumbers; i++) {
@@ -30,6 +33,7 @@ let game = (function () {
 
             }
         },
+
         setPieces = function () {
             let i;//, pieces = [];
 
@@ -37,32 +41,28 @@ let game = (function () {
                 pieces.push({});
                 pieces[i].toGuess = false;
             }
-            generateRandPieces();
-
             return pieces;
         },
+
         increaseLevel = function () {
             let level = game.getLevel() + 1;
             game.setLevel(level);
 
         },
 
-        getRandPieces = function(){
+        getRandPieces = function () {
 
             return randPieces;
         },
 
         getPieces = function () {
-            let i;//, pieces = [];
-
-            //getRandPieces();
+            let i;
 
             for (i = 0; i < currentOfPieces; i++) {
-                //pieces.push({});
 
-                if(randPieces.includes(i, 0)) {
+                if (randPieces.includes(i, 0)) {
                     pieces[i].toGuess = true;
-                }else{
+                } else {
                     pieces[i].toGuess = false;
                 }
             }
@@ -78,8 +78,9 @@ let game = (function () {
             }
             level = 0;
             setPieces();
+            generateRandPieces();
         },
-        addPiece = function(){
+        addPiece = function () {
             currentOfPieces = currentOfPieces + 1;
             setPieces();
 
@@ -105,8 +106,9 @@ let game = (function () {
         'setLevel': setLevel,
         'increaseLevel': increaseLevel,
         'countNumberOfHighlight': countNumberOfHighlight,
-        'randPiece' : randPiece,
-        'getRandPieces' : getRandPieces
+        'randPiece': randPiece,
+        'getRandPieces': getRandPieces,
+        'generateRandPieces': generateRandPieces
 
     }
 })();
