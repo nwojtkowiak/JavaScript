@@ -1,0 +1,19 @@
+section{
+    display: inline-block;
+    justify-content: center;
+    /*width: 100vw;*/
+    /*background-color: grey;*/
+}
+div{
+    /*background-color: darkkhaki;*/
+    display: inline-block;
+}
+#pieces{
+    align-content: space-between;
+}
+.piece{
+    background-color: blue;
+    border: double black;
+    width: 100px;
+    height: 100px;
+}

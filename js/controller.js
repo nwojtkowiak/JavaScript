@@ -11,17 +11,30 @@ let controller = function () {
                 )
             }
 
-            alert(initialNumberOfPieces);
+            //alert(initialNumberOfPieces);
+            view.draw(0);
+            view.highlightPieces(game.getPieces());
         },
+
+        highlight = function(){
+            view.highlightPieces(game.getPieces());
+        },
+
         addPiece = function () {
             game.addPiece();
-        };
+        },
 
+        changeColor = function (id) {
+            //alert("change color: "+id);
+            view.changeColor(id);
+        };
 
 
     return {
         'startGame': startGame,
-        'addPiece': addPiece
+        'addPiece': addPiece,
+        'changeColor' : changeColor,
+        'highlight' : highlight
 
     };
 }();
