@@ -18,33 +18,35 @@ var controller = function () {
             view.highlightPieces(game.getPieces());
         },
 
-        highlight = function(){
-        game.generateRandPieces();
+        highlight = function () {
+            game.generateRandPieces();
             view.highlightPieces(game.getPieces());
         },
 
         addPiece = function () {
-        //todo podawać jako parametr a nie 1 - i to z view - możliwość ustawienia ile dodajemy
+            //todo podawać jako parametr a nie 1 - i to z view - możliwość ustawienia ile dodajemy
             game.addPiece();
-            view.draw(game.getLengthPieces()-1,1);
+            view.draw(game.getLengthPieces() - 1, 1);
         },
 
         changeColor = function (id) {
-            //alert("change color: "+id);
-            var resultLevel = view.changeColor(id,game.getPieces(), game.getNumberToGuess());
-           /*if(game.checkResult(resultLevel) === false) {
-               view.gameOver();
-            }else{
-                view.draw(game.getLengthPieces(),1);
-            }*/
+            var resultLevel = view.changeColor(id, game.getPieces(), game.getNumberToGuess());
+            setTimeout( function () {
+                if (game.checkResult(resultLevel) === false) {
+                    view.gameOver();
+                } else {
+                    view.draw(game.getLengthPieces());
+                }
+            },1000);
+
         };
 
 
     return {
         'startGame': startGame,
         'addPiece': addPiece,
-        'changeColor' : changeColor,
-        'highlight' : highlight
+        'changeColor': changeColor,
+        'highlight': highlight
 
     };
 }();

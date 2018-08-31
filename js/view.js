@@ -7,13 +7,14 @@ var view = function () {
             //dom
             return 4;
         },
-        draw = function (fromId, num) {
+        draw = function (num) {
             var i, element, piece;
             if (!num) {
                 num = getInitialNumberOfPieces();
             }
             element = document.getElementById("pieces");
-            for (i = fromId; i < fromId + num; i++) {
+            element.innerHTML = "";
+            for (i = 0; i < num; i++) {
                 piece = document.createElement("div");
                 //piece.addEventListener("click", controller.changeColor(" + i + "));
                 piece.setAttribute("onclick", "controller.changeColor(" + i + ")");
@@ -33,18 +34,19 @@ var view = function () {
             unHighlightPieces(pieces);
         },
         unHighlightPieces = function (pieces) {
-
+            correctAnswers = 0;
             setTimeout(function () {
                 var id, element;
 
                 for (id = 0; id < pieces.length; id++) {
-                    console.log("pieceId: " +  id + " " +pieces[id].toGuess);
+                    console.log("pieceId: " + id + " " + pieces[id].toGuess);
                     if (pieces[id].toGuess) {
 
                         element = document.getElementById(id.toString());
                         element.style.backgroundColor = "grey";
                     }
                 }
+                return true;
             }, timeout);
         },
         unHighlightPiece = function (pieceId) {
@@ -52,6 +54,7 @@ var view = function () {
                 var element;
                 element = document.getElementById(pieceId);
                 element.style.backgroundColor = "grey";
+
             }, timeout);
             correctAnswers = 0;
         },
@@ -64,7 +67,7 @@ var view = function () {
                 correctAnswers = correctAnswers + 1;
                 if (correctAnswers === numberToGuess) {
                     unHighlightPieces(pieces);
-                    //return true;
+                    return true;
                 }
 
             } else {
@@ -72,6 +75,7 @@ var view = function () {
                 unHighlightPiece(pieceId);
                 return false;
             }
+
         },
         gameOver = function () {
             var element = document.getElementById("result");
@@ -87,6 +91,6 @@ var view = function () {
         'draw': draw,
         'changeColor': changeColor,
         'highlightPieces': highlightPieces,
-        'gameOver' : gameOver
+        'gameOver': gameOver
     };
 }();

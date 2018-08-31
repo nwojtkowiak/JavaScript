@@ -105,7 +105,8 @@ var game = (function () {
         }
         ,
         checkResult = function (result) {
-            if(checkResult){
+
+            if(result){
                 addPiece();
                 return true;
             }else{
