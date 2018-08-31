@@ -1,19 +1,33 @@
 section{
     display: inline-block;
     justify-content: center;
-    /*width: 100vw;*/
-    /*background-color: grey;*/
 }
 div{
-    /*background-color: darkkhaki;*/
     display: inline-block;
 }
 #pieces{
-    align-content: space-between;
+    align-content: center;
+    width: 100vw;
+    margin-left: 50px;
+}
+#buttons{
+    height: 50px;
 }
 .piece{
-    background-color: blue;
+    background-color: grey;
     border: double black;
     width: 100px;
     height: 100px;
+}
+.end{
+    width: 100vw;
+    display: block;
+    align-content: center;
+    font-size: larger;
+    font-weight: bold;
+    color: red;
+    justify-content: center;
+}
+section{
+    justify-content: space-around;
 }

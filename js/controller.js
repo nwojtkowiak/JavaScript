@@ -1,6 +1,8 @@
-let controller = function () {
-    let startGame = function (numberOfPieces) {
-            let initialNumberOfPieces = view.getInitialNumberOfPieces();
+'use strict'
+
+var controller = function () {
+    var startGame = function (numberOfPieces) {
+            var initialNumberOfPieces = view.getInitialNumberOfPieces();
             if (numberOfPieces) {
                 game.startGame(
                     {numberOfPieces: numberOfPieces}
@@ -22,13 +24,19 @@ let controller = function () {
         },
 
         addPiece = function () {
+        //todo podawać jako parametr a nie 1 - i to z view - możliwość ustawienia ile dodajemy
             game.addPiece();
             view.draw(game.getLengthPieces()-1,1);
         },
 
         changeColor = function (id) {
             //alert("change color: "+id);
-            view.changeColor(id,game.getPieces());
+            var resultLevel = view.changeColor(id,game.getPieces(), game.getNumberToGuess());
+           /*if(game.checkResult(resultLevel) === false) {
+               view.gameOver();
+            }else{
+                view.draw(game.getLengthPieces(),1);
+            }*/
         };
 
 

@@ -3,23 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>start</title>
-    <link rel="stylesheet" type="text/css" href="css/view.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/view.css"/>
 </head>
-<body onload="controller.startGame()">
+<body id="gameBody" onload="controller.startGame()">
 
 <script src="js/game.js"></script>
 <script src="js/view.js"></script>
 <script src="js/controller.js"></script>
 
 <H1 style="align-content: center">HAKUNA MATATA</H1>
-<div>
-    <section>
-        <button onclick="controller.highlight()">Highlight</button>
-        <button onclick="controller.addPiece()">Add piece</button>
-    </section>
-    <section id="pieces">
+<section id="result"></section>
 
-    </section>
-</div>
+
+<br>
+<section id="buttons">
+    <button onclick="controller.highlight()">Highlight</button>
+    <button onclick="controller.addPiece()">Add piece</button>
+</section>
+
+
+<section id="pieces">
+
+</section>
+
 </body>
 </html>

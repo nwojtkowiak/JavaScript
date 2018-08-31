@@ -1,15 +1,19 @@
-let game = (function () {
+'use strict'
 
-    let initialNumberOfPieces = 4,
+var game = (function () {
+
+    var initialNumberOfPieces = 4,
         level = 0,
         points = 0,
         randPieces = [],
         pieces = [],
         currentOfPieces,
+        numberToGuess = 1,
+        lifes = 1,
 
 
         countNumberOfHighlight = function () {
-            return game.getLengthPieces() - 3 - game.getLevel();
+            numberToGuess = game.getLengthPieces() - 3 - game.getLevel();
         },
 
         randPiece = function () {
@@ -18,13 +22,13 @@ let game = (function () {
         },
 
         generateRandPieces = function () {
-            let randNumbers = countNumberOfHighlight();
-            let rand, i;
-            console.log("randNumbers: " + randNumbers);
+            countNumberOfHighlight();
+            var rand, i;
+            console.log("randNumbers: " + numberToGuess);
 
             randPieces = [];
 
-            for (i = 0; i < randNumbers; i++) {
+            for (i = 0; i < numberToGuess; i++) {
                 do {
                     rand = randPiece();
                 } while (randPieces.includes(rand));
@@ -35,17 +39,17 @@ let game = (function () {
         },
 
         setPieces = function () {
-            let i;//, pieces = [];
-
-            for (i = 0; i < currentOfPieces; i++) {
+            var id;
+            pieces = [];
+            for (id = 0; id < currentOfPieces; id++) {
                 pieces.push({});
-                pieces[i].toGuess = false;
+                pieces[id].toGuess = false;
             }
             return pieces;
         },
 
         increaseLevel = function () {
-            let level = game.getLevel() + 1;
+            var level = game.getLevel() + 1;
             game.setLevel(level);
 
         },
@@ -56,14 +60,14 @@ let game = (function () {
         },
 
         getPieces = function () {
-            let i;
+            var id;
 
-            for (i = 0; i < currentOfPieces; i++) {
+            for (id = 0; id < currentOfPieces; id++) {
 
-                if (randPieces.includes(i, 0)) {
-                    pieces[i].toGuess = true;
+                if (randPieces.includes(id)) {
+                    pieces[id].toGuess = true;
                 } else {
-                    pieces[i].toGuess = false;
+                    pieces[id].toGuess = false;
                 }
             }
             return pieces;
@@ -81,7 +85,8 @@ let game = (function () {
             generateRandPieces();
         },
         addPiece = function () {
-            currentOfPieces = currentOfPieces + 1;
+            currentOfPieces++;
+            level++;
             setPieces();
 
         },
@@ -94,6 +99,20 @@ let game = (function () {
         },
         setLevel = function (newLevel) {
             level = newLevel;
+        },
+        getNumberToGuess = function () {
+            return numberToGuess;
+        }
+        ,
+        checkResult = function (result) {
+            if(checkResult){
+                addPiece();
+                return true;
+            }else{
+                if(--lifes === 0){
+                    return false;
+                }
+            }
         };
 
     return {
@@ -108,7 +127,9 @@ let game = (function () {
         'countNumberOfHighlight': countNumberOfHighlight,
         'randPiece': randPiece,
         'getRandPieces': getRandPieces,
-        'generateRandPieces': generateRandPieces
+        'generateRandPieces': generateRandPieces,
+        'getNumberToGuess' : getNumberToGuess,
+        'checkResult' : checkResult
 
     }
 })();

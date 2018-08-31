@@ -1,5 +1,9 @@
+'use strict'
+
 var view = function () {
-    var getInitialNumberOfPieces = function () {
+    var correctAnswers = 0,
+        timeout = 1000,
+        getInitialNumberOfPieces = function () {
             //dom
             return 4;
         },
@@ -11,7 +15,7 @@ var view = function () {
             element = document.getElementById("pieces");
             for (i = fromId; i < fromId + num; i++) {
                 piece = document.createElement("div");
-                /*piece.innerHTML = " <rect  x={x} width='80' height='80' style='fill:white;stroke:black;stroke-width:5;opacity:0.5'/>";*/
+                //piece.addEventListener("click", controller.changeColor(" + i + "));
                 piece.setAttribute("onclick", "controller.changeColor(" + i + ")");
                 piece.setAttribute("class", "piece");
                 piece.setAttribute("id", i);
@@ -19,41 +23,62 @@ var view = function () {
             }
         },
         highlightPieces = function (pieces) {
-            var i, element;
-            for (i = 0; i < pieces.length; i++) {
-                if (pieces[i].toGuess) {
-                    element = document.getElementById(i);
-                    element.style.backgroundColor = "grey";
+            var id, element;
+            for (id = 0; id < pieces.length; id++) {
+                if (pieces[id].toGuess) {
+                    element = document.getElementById(id.toString());
+                    element.style.backgroundColor = "blue";
                 }
             }
             unHighlightPieces(pieces);
         },
         unHighlightPieces = function (pieces) {
-            setTimeout(() => {
-                var i, element;
-                for (i = 0; i < pieces.length; i++) {
-                    if (pieces[i].toGuess) {
-                        element = document.getElementById(i);
-                        element.style.backgroundColor = "blue";
+
+            setTimeout(function () {
+                var id, element;
+
+                for (id = 0; id < pieces.length; id++) {
+                    console.log("pieceId: " +  id + " " +pieces[id].toGuess);
+                    if (pieces[id].toGuess) {
+
+                        element = document.getElementById(id.toString());
+                        element.style.backgroundColor = "grey";
                     }
                 }
-            }, 1000);
+            }, timeout);
         },
-        changeColor = function (id, pieces) {
-            var element = document.getElementById(id);
-            element = document.getElementById(id.toString());
-            if (pieces[id].toGuess) {
-                element.style.backgroundColor = "green";
-                setTimeout(function () {
-                    element.style.backgroundColor = "blue";
-                }, 1000);
+        unHighlightPiece = function (pieceId) {
+            setTimeout(function () {
+                var element;
+                element = document.getElementById(pieceId);
+                element.style.backgroundColor = "grey";
+            }, timeout);
+            correctAnswers = 0;
+        },
+        changeColor = function (pieceId, pieces, numberToGuess) {
+
+            var element = document.getElementById(pieceId.toString());
+
+            if (pieces[pieceId].toGuess) {
+                element.style.backgroundColor = "forestgreen";
+                correctAnswers = correctAnswers + 1;
+                if (correctAnswers === numberToGuess) {
+                    unHighlightPieces(pieces);
+                    //return true;
+                }
 
             } else {
                 element.style.backgroundColor = "red";
-                setTimeout(function () {
-                    element.style.backgroundColor = "blue";
-                }, 1000);
+                unHighlightPiece(pieceId);
+                return false;
             }
+        },
+        gameOver = function () {
+            var element = document.getElementById("result");
+            var end = document.createElement("center");
+            end.setAttribute("class", "end");
+            end.innerHTML = "GAME OVER";
+            element.appendChild(end);
         };
 
 
@@ -61,6 +86,7 @@ var view = function () {
         'getInitialNumberOfPieces': getInitialNumberOfPieces,
         'draw': draw,
         'changeColor': changeColor,
-        'highlightPieces': highlightPieces
+        'highlightPieces': highlightPieces,
+        'gameOver' : gameOver
     };
 }();
