@@ -4,7 +4,6 @@ var view = function () {
     var correctAnswers = 0,
         timeout = 1000,
         getInitialNumberOfPieces = function () {
-            //dom
             return 4;
         },
         draw = function (num) {
@@ -22,6 +21,7 @@ var view = function () {
                 piece.setAttribute("id", i);
                 element.appendChild(piece);
             }
+
         },
         highlightPieces = function (pieces) {
             var id, element;
@@ -67,14 +67,15 @@ var view = function () {
                 correctAnswers = correctAnswers + 1;
                 if (correctAnswers === numberToGuess) {
                     unHighlightPieces(pieces);
-                    return true;
+                    return 'END_LEVEL';
                 }
 
             } else {
                 element.style.backgroundColor = "red";
                 unHighlightPiece(pieceId);
-                return false;
+                return 'GAME_OVER';
             }
+            return 'CONTINUE';
 
         },
         gameOver = function () {
@@ -83,6 +84,15 @@ var view = function () {
             end.setAttribute("class", "end");
             end.innerHTML = "GAME OVER";
             element.appendChild(end);
+            draw(getInitialNumberOfPieces());
+        },
+        applyResultOfGame = function (result, pieces) {
+            if (result === false) {
+                gameOver();
+            } else {
+                draw(pieces.length);
+                highlightPieces(pieces);
+            }
         };
 
 
@@ -91,6 +101,7 @@ var view = function () {
         'draw': draw,
         'changeColor': changeColor,
         'highlightPieces': highlightPieces,
-        'gameOver': gameOver
+        'gameOver': gameOver,
+        'applyResultOfGame' : applyResultOfGame
     };
 }();

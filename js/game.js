@@ -13,7 +13,7 @@ var game = (function () {
 
 
         countNumberOfHighlight = function () {
-            numberToGuess = game.getLengthPieces() - 3 - game.getLevel();
+            numberToGuess = Math.floor(getLengthPieces()/2) - 1;
         },
 
         randPiece = function () {
@@ -41,10 +41,12 @@ var game = (function () {
         setPieces = function () {
             var id;
             pieces = [];
+
             for (id = 0; id < currentOfPieces; id++) {
                 pieces.push({});
                 pieces[id].toGuess = false;
             }
+            generateRandPieces();
             return pieces;
         },
 
@@ -82,7 +84,7 @@ var game = (function () {
             }
             level = 0;
             setPieces();
-            generateRandPieces();
+
         },
         addPiece = function () {
             currentOfPieces++;
@@ -106,14 +108,15 @@ var game = (function () {
         ,
         checkResult = function (result) {
 
-            if(result){
+            if(result === 'END_LEVEL'){
                 addPiece();
                 return true;
-            }else{
+            }else if(result === 'GAME_OVER'){
                 if(--lifes === 0){
                     return false;
                 }
             }
+            return true;
         };
 
     return {

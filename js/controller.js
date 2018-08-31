@@ -13,7 +13,6 @@ var controller = function () {
                 )
             }
 
-            //alert(initialNumberOfPieces);
             view.draw(0);
             view.highlightPieces(game.getPieces());
         },
@@ -26,18 +25,20 @@ var controller = function () {
         addPiece = function () {
             //todo podawać jako parametr a nie 1 - i to z view - możliwość ustawienia ile dodajemy
             game.addPiece();
-            view.draw(game.getLengthPieces() - 1, 1);
+            view.draw(game.getLengthPieces());
+            view.highlightPieces(game.getPieces());
+
         },
 
         changeColor = function (id) {
             var resultLevel = view.changeColor(id, game.getPieces(), game.getNumberToGuess());
-            setTimeout( function () {
-                if (game.checkResult(resultLevel) === false) {
-                    view.gameOver();
-                } else {
-                    view.draw(game.getLengthPieces());
-                }
-            },1000);
+            if(resultLevel !== 'CONTINUE') {
+                setTimeout(function () {
+                    var gameResult = game.checkResult(resultLevel);
+                    view.applyResultOfGame(gameResult, game.getPieces());
+
+                }, 1000);
+            }
 
         };
 
