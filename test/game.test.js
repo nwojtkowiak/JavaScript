@@ -1,7 +1,7 @@
 
 describe('Game', function () {
      it('should have 4 pieces after game start', function () {
-        let pieces;
+         var pieces;
         game.startGame();
         pieces = game.getPieces();
         //console.log(spec1.getFullName());
@@ -9,7 +9,7 @@ describe('Game', function () {
     });
 
     it('one piece should be to guess after start game', function () {
-        let piecesToGuess;
+        var piecesToGuess;
         game.startGame();
         piecesToGuess = findPiecesToGuess(game.getPieces());
        // console.log(spec2.getFullName());
@@ -17,7 +17,7 @@ describe('Game', function () {
     });
 
     it('should start game with configured number of pieces', function () {
-        let pieces,
+        var pieces,
             config  = {
             numberOfPieces : 6
             };
@@ -28,7 +28,7 @@ describe('Game', function () {
     });
 
     it('should return bigger size of pieces', function () {
-        let pieces,
+        var pieces,
             config  = {
                 numberOfPieces : 6
             };
@@ -40,7 +40,7 @@ describe('Game', function () {
     });
 
     it('should return level 1 after increase', function () {
-        let config  = {
+        var config  = {
                 numberOfPieces : 6
             };
         game.startGame(config);
@@ -50,11 +50,11 @@ describe('Game', function () {
     });
 
     it('should return 1 piece to highlight', function () {
-        let config  = {
+        var config  = {
                 numberOfPieces : 4
             };
         game.startGame(config);
-        let numToHighlight = game.countNumberOfHighlight();
+        var numToHighlight = game.getNumberToGuess();
         // console.log(spec3.getFullName());
         expect(1).toBe(numToHighlight);
     });

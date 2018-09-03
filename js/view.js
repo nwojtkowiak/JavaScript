@@ -1,12 +1,17 @@
 'use strict'
 
 var view = function () {
-    var correctAnswers = 0,
+    var correctAnswers = [],
         timeout = 1000,
         getInitialNumberOfPieces = function () {
             return 4;
         },
-        draw = function (num) {
+        getDisplayTimeout = function () {
+            var newTimeout = Number(document.getElementById("displayTime").value ) * 1000;
+            timeout = newTimeout || timeout;
+            return  timeout;
+        },
+        draw = function (num, numberToGuess, callbackChangeColor) {
             var i, element, piece;
             if (!num) {
                 num = getInitialNumberOfPieces();
@@ -15,12 +20,14 @@ var view = function () {
             element.innerHTML = "";
             for (i = 0; i < num; i++) {
                 piece = document.createElement("div");
-                //piece.addEventListener("click", controller.changeColor(" + i + "));
-                piece.setAttribute("onclick", "controller.changeColor(" + i + ")");
+
                 piece.setAttribute("class", "piece");
                 piece.setAttribute("id", i);
+                piece.addEventListener("click", callbackChangeColor);
                 element.appendChild(piece);
             }
+            element = document.getElementById("toGuess");
+            element.innerText = "To guess: " + numberToGuess.toString();
 
         },
         highlightPieces = function (pieces) {
@@ -28,13 +35,22 @@ var view = function () {
             for (id = 0; id < pieces.length; id++) {
                 if (pieces[id].toGuess) {
                     element = document.getElementById(id.toString());
-                    element.style.backgroundColor = "blue";
+                    element.classList.add('marked');
                 }
             }
-            unHighlightPieces(pieces);
+            unHighlightPieces(pieces, 'marked');
+
         },
-        unHighlightPieces = function (pieces) {
-            correctAnswers = 0;
+        unHighlightPieces = function (pieces, status) {
+
+            correctAnswers = [];
+            var piecesContainer, idElement;
+            piecesContainer = document.getElementsByClassName("piece");
+
+            for (idElement = 0; idElement < piecesContainer.length; idElement++) {
+                piecesContainer.item(idElement).classList.add('blocked');
+            }
+
             setTimeout(function () {
                 var id, element;
 
@@ -43,54 +59,83 @@ var view = function () {
                     if (pieces[id].toGuess) {
 
                         element = document.getElementById(id.toString());
-                        element.style.backgroundColor = "grey";
+                        element.classList.remove(status);
+
                     }
                 }
+
+                for (idElement = 0; idElement < piecesContainer.length; idElement++) {
+                    piecesContainer.item(idElement).classList.remove('blocked');
+                }
+
                 return true;
-            }, timeout);
+            }, getDisplayTimeout());
         },
         unHighlightPiece = function (pieceId) {
+            correctAnswers = [];
             setTimeout(function () {
                 var element;
                 element = document.getElementById(pieceId);
-                element.style.backgroundColor = "grey";
+                element.classList.remove('wrongAnswer');
 
-            }, timeout);
-            correctAnswers = 0;
+
+            }, getDisplayTimeout());
+
         },
-        changeColor = function (pieceId, pieces, numberToGuess) {
+        setCorrectAnswer = function (element, pieces, numberToGuess) {
+            element.classList.add('correctAnswer');
 
-            var element = document.getElementById(pieceId.toString());
+            if (correctAnswers.length === numberToGuess) {
+                unHighlightPieces(pieces, 'correctAnswer');
+                return 'END_LEVEL';
+            }
+            return 'CONTINUE';
+        },
+
+        setWrongAnswer = function (element, pieceId) {
+            element.classList.add('wrongAnswer');
+            unHighlightPiece(pieceId);
+            return 'GAME_OVER';
+        },
+
+        changeColor = function (pieceId, pieces, numberToGuess) {
+            function compareElements(element) {
+                return element === this;
+            }
+
+            var element = document.getElementById(pieceId);
 
             if (pieces[pieceId].toGuess) {
-                element.style.backgroundColor = "forestgreen";
-                correctAnswers = correctAnswers + 1;
-                if (correctAnswers === numberToGuess) {
-                    unHighlightPieces(pieces);
-                    return 'END_LEVEL';
+
+                if (correctAnswers.some(compareElements, pieceId) === true) {
+                    return setWrongAnswer(element, pieceId);
                 }
+                correctAnswers.push(pieceId);
+                return setCorrectAnswer(element, pieces, numberToGuess);
+
 
             } else {
-                element.style.backgroundColor = "red";
-                unHighlightPiece(pieceId);
-                return 'GAME_OVER';
+                return setWrongAnswer(element, pieceId);
             }
             return 'CONTINUE';
 
         },
-        gameOver = function () {
+        gameOver = function (numberToGuess, callbackChangeColor ) {
             var element = document.getElementById("result");
             var end = document.createElement("center");
             end.setAttribute("class", "end");
             end.innerHTML = "GAME OVER";
             element.appendChild(end);
-            draw(getInitialNumberOfPieces());
+            setTimeout(function () {
+                end.innerHTML = '';
+            },3000);
+            draw(getInitialNumberOfPieces(), numberToGuess, callbackChangeColor);
         },
-        applyResultOfGame = function (result, pieces) {
+        applyResultOfGame = function (result, pieces, numberToGuess, callbackChangeColor) {
             if (result === false) {
-                gameOver();
+                gameOver(numberToGuess, callbackChangeColor);
             } else {
-                draw(pieces.length);
+                draw(pieces.length, numberToGuess,callbackChangeColor);
                 highlightPieces(pieces);
             }
         };
@@ -102,6 +147,6 @@ var view = function () {
         'changeColor': changeColor,
         'highlightPieces': highlightPieces,
         'gameOver': gameOver,
-        'applyResultOfGame' : applyResultOfGame
+        'applyResultOfGame': applyResultOfGame
     };
 }();

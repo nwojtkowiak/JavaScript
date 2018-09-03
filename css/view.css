@@ -10,11 +10,14 @@ div{
     width: 100vw;
     margin-left: 50px;
 }
-#buttons{
+#navigation{
     height: 50px;
 }
+h1{
+    text-align-last: center;
+}
 .piece{
-    background-color: grey;
+    background-color: yellow;
     border: double black;
     width: 100px;
     height: 100px;
@@ -28,6 +31,27 @@ div{
     color: red;
     justify-content: center;
 }
+.marked{
+    background-color: blue;
+}
+.wrongAnswer{
+    background-color: red;
+}
+.correctAnswer{
+    background-color: green;
+}
 section{
     justify-content: space-around;
+}
+.blocked{
+    pointer-events: none;
+}
+#toGuess{
+    text-align-last: right;
+    color: #000088;
+    font-size: larger;
+    text-decoration-style: solid;
+}
+.numberToGuess{
+    width: 50vw;
 }
