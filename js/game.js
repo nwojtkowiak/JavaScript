@@ -9,7 +9,7 @@ var game = (function () {
         pieces = [],
         lengthOfPieces = 0,
         numberToGuess = 1,
-        life = 1,
+        lives = 1,
 
 
         countNumberToGuess = function () {
@@ -24,15 +24,12 @@ var game = (function () {
         generateRandPieces = function () {
             countNumberToGuess();
             var rand, i;
-            console.log("randNumbers: " + numberToGuess);
-
             randPieces = [];
 
             for (i = 0; i < numberToGuess; i++) {
                 do {
                     rand = randPiece();
                 } while (randPieces.includes(rand));
-                console.log("RAND: " + rand);
                 randPieces.push(rand);
 
             }
@@ -72,13 +69,13 @@ var game = (function () {
 
 
         startGame = function (config) {
-            if (config && config.numberOfPieces) {
-                lengthOfPieces = config.numberOfPieces;
+            if (config ) {
+                lengthOfPieces = config;
             } else {
                 lengthOfPieces = initialNumberOfPieces;
             }
             level = 0;
-            life = 1;
+            lives = 1;
             setPieces();
 
         },
@@ -100,15 +97,20 @@ var game = (function () {
         },
         getNumberToGuess = function () {
             return numberToGuess;
-        }
-        ,
+        },
+        getLives = function () {
+            return lives;
+        },
+        setLives = function (numberOfLives) {
+            lives = numberOfLives;
+        },
         checkResult = function (result) {
 
             if(result === 'END_LEVEL'){
                 addPiece();
                 return true;
             }else if(result === 'GAME_OVER'){
-                if(--life === 0){
+                if(--lives === 0){
                     return false;
                 }
             }
@@ -129,7 +131,9 @@ var game = (function () {
         'getRandPieces': getRandPieces,
         'generateRandPieces': generateRandPieces,
         'getNumberToGuess' : getNumberToGuess,
-        'checkResult' : checkResult
+        'checkResult' : checkResult,
+        'getLives' : getLives,
+        'setLives' : setLives
 
     }
 })();

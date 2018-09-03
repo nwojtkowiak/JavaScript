@@ -11,6 +11,10 @@ var view = function () {
             timeout = newTimeout || timeout;
             return  timeout;
         },
+        getLives = function () {
+            var numberOfLives = Number(document.getElementById("numberOfLives").value ) ;
+            return  numberOfLives;
+        },
         draw = function (num, numberToGuess, callbackChangeColor) {
             var i, element, piece;
             if (!num) {
@@ -55,7 +59,6 @@ var view = function () {
                 var id, element;
 
                 for (id = 0; id < pieces.length; id++) {
-                    console.log("pieceId: " + id + " " + pieces[id].toGuess);
                     if (pieces[id].toGuess) {
 
                         element = document.getElementById(id.toString());
@@ -147,6 +150,7 @@ var view = function () {
         'changeColor': changeColor,
         'highlightPieces': highlightPieces,
         'gameOver': gameOver,
-        'applyResultOfGame': applyResultOfGame
+        'applyResultOfGame': applyResultOfGame,
+        'getLives' : getLives
     };
 }();

@@ -4,17 +4,14 @@ var controller = function () {
     var startGame = function (numberOfPieces) {
             var initialNumberOfPieces = view.getInitialNumberOfPieces();
             if (numberOfPieces) {
-                game.startGame(
-                    {numberOfPieces: numberOfPieces}
-                )
+                game.startGame(numberOfPieces)
             } else {
-                game.startGame(
-                    {numberOfPieces: initialNumberOfPieces}
-                )
+                game.startGame(initialNumberOfPieces)
             }
 
             view.draw(0, game.getNumberToGuess(),changeColor);
             view.highlightPieces(game.getPieces());
+
         },
 
         highlight = function () {
@@ -28,6 +25,10 @@ var controller = function () {
             view.draw(game.getLengthPieces(),  game.getNumberToGuess(), changeColor);
             view.highlightPieces(game.getPieces());
 
+        },
+        setLives = function(){
+            var numberOfLives = view.getLives();
+            game.setLives(numberOfLives);
         },
 
         changeColor = function (event) {
@@ -48,7 +49,8 @@ var controller = function () {
         'startGame': startGame,
         'addPiece': addPiece,
         'changeColor': changeColor,
-        'highlight': highlight
+        'highlight': highlight,
+        'setLives' : setLives
 
     };
 }();
