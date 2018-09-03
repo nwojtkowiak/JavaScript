@@ -7,13 +7,13 @@ var view = function () {
             return 4;
         },
         getDisplayTimeout = function () {
-            var newTimeout = Number(document.getElementById("displayTime").value ) * 1000;
+            var newTimeout = Number(document.getElementById("displayTime").value) * 1000;
             timeout = newTimeout || timeout;
-            return  timeout;
+            return timeout;
         },
         getLives = function () {
-            var numberOfLives = Number(document.getElementById("numberOfLives").value ) ;
-            return  numberOfLives;
+            var numberOfLives = Number(document.getElementById("numberOfLives").value);
+            return numberOfLives;
         },
         draw = function (num, numberToGuess, callbackChangeColor) {
             var i, element, piece;
@@ -25,8 +25,8 @@ var view = function () {
             for (i = 0; i < num; i++) {
                 piece = document.createElement("div");
 
-                piece.setAttribute("class", "piece");
-                piece.setAttribute("id", i);
+                piece.className = "piece blocked";
+                piece.setAttribute("id", i.toString());
                 piece.addEventListener("click", callbackChangeColor);
                 element.appendChild(piece);
             }
@@ -51,10 +51,6 @@ var view = function () {
             var piecesContainer, idElement;
             piecesContainer = document.getElementsByClassName("piece");
 
-            for (idElement = 0; idElement < piecesContainer.length; idElement++) {
-                piecesContainer.item(idElement).classList.add('blocked');
-            }
-
             setTimeout(function () {
                 var id, element;
 
@@ -63,10 +59,8 @@ var view = function () {
 
                         element = document.getElementById(id.toString());
                         element.classList.remove(status);
-
                     }
                 }
-
                 for (idElement = 0; idElement < piecesContainer.length; idElement++) {
                     piecesContainer.item(idElement).classList.remove('blocked');
                 }
@@ -80,7 +74,6 @@ var view = function () {
                 var element;
                 element = document.getElementById(pieceId);
                 element.classList.remove('wrongAnswer');
-
 
             }, getDisplayTimeout());
 
@@ -109,13 +102,11 @@ var view = function () {
             var element = document.getElementById(pieceId);
 
             if (pieces[pieceId].toGuess) {
-
                 if (correctAnswers.some(compareElements, pieceId) === true) {
                     return setWrongAnswer(element, pieceId);
                 }
                 correctAnswers.push(pieceId);
                 return setCorrectAnswer(element, pieces, numberToGuess);
-
 
             } else {
                 return setWrongAnswer(element, pieceId);
@@ -123,7 +114,7 @@ var view = function () {
             return 'CONTINUE';
 
         },
-        gameOver = function (numberToGuess, callbackChangeColor ) {
+        gameOver = function (numberToGuess, callbackChangeColor) {
             var element = document.getElementById("result");
             var end = document.createElement("center");
             end.setAttribute("class", "end");
@@ -131,14 +122,14 @@ var view = function () {
             element.appendChild(end);
             setTimeout(function () {
                 end.innerHTML = '';
-            },3000);
+            }, 3000);
             draw(getInitialNumberOfPieces(), numberToGuess, callbackChangeColor);
         },
         applyResultOfGame = function (result, pieces, numberToGuess, callbackChangeColor) {
             if (result === false) {
                 gameOver(numberToGuess, callbackChangeColor);
             } else {
-                draw(pieces.length, numberToGuess,callbackChangeColor);
+                draw(pieces.length, numberToGuess, callbackChangeColor);
                 highlightPieces(pieces);
             }
         };
@@ -151,6 +142,6 @@ var view = function () {
         'highlightPieces': highlightPieces,
         'gameOver': gameOver,
         'applyResultOfGame': applyResultOfGame,
-        'getLives' : getLives
+        'getLives': getLives
     };
 }();

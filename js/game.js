@@ -4,7 +4,6 @@ var game = (function () {
 
     var initialNumberOfPieces = 4,
         level = 0,
-        points = 0,
         randPieces = [],
         pieces = [],
         lengthOfPieces = 0,
@@ -43,7 +42,9 @@ var game = (function () {
                 pieces.push({});
                 pieces[id].toGuess = false;
             }
+
             generateRandPieces();
+
             return pieces;
         },
 
@@ -61,9 +62,9 @@ var game = (function () {
             var id;
 
             for (id = 0; id < lengthOfPieces; id++) {
-
                 pieces[id].toGuess = randPieces.includes(id);
             }
+
             return pieces;
         },
 
@@ -121,12 +122,10 @@ var game = (function () {
         'startGame': startGame,
         'addPiece': addPiece,
         'getPieces': getPieces,
-        'setPieces': setPieces,
         'getLengthPieces': getLengthPieces,
         'getLevel': getLevel,
         'setLevel': setLevel,
         'increaseLevel': increaseLevel,
-        'countNumberToGuess': countNumberToGuess,
         'randPiece': randPiece,
         'getRandPieces': getRandPieces,
         'generateRandPieces': generateRandPieces,

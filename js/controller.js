@@ -20,7 +20,6 @@ var controller = function () {
         },
 
         addPiece = function () {
-            //todo podawać jako parametr a nie 1 - i to z view - możliwość ustawienia ile dodajemy
             game.addPiece();
             view.draw(game.getLengthPieces(),  game.getNumberToGuess(), changeColor);
             view.highlightPieces(game.getPieces());
