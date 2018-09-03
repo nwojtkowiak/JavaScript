@@ -10,7 +10,6 @@ var game = (function () {
         numberToGuess = 1,
         lives = 1,
 
-
         countNumberToGuess = function () {
             return numberToGuess = Math.floor(getLengthPieces()/2) - 1;
         },
@@ -21,8 +20,8 @@ var game = (function () {
         },
 
         generateRandPieces = function () {
-            countNumberToGuess();
             var rand, i;
+            countNumberToGuess();
             randPieces = [];
 
             for (i = 0; i < numberToGuess; i++) {
@@ -42,7 +41,6 @@ var game = (function () {
                 pieces.push({});
                 pieces[id].toGuess = false;
             }
-
             generateRandPieces();
 
             return pieces;
@@ -51,7 +49,6 @@ var game = (function () {
         increaseLevel = function () {
             var level = game.getLevel() + 1;
             game.setLevel(level);
-
         },
 
         getRandPieces = function () {

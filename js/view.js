@@ -47,13 +47,12 @@ var view = function () {
         },
         unHighlightPieces = function (pieces, status) {
 
+            var  piecesContainer, idElement;
             correctAnswers = [];
-            var piecesContainer, idElement;
             piecesContainer = document.getElementsByClassName("piece");
 
             setTimeout(function () {
                 var id, element;
-
                 for (id = 0; id < pieces.length; id++) {
                     if (pieces[id].toGuess) {
 
@@ -115,10 +114,13 @@ var view = function () {
 
         },
         gameOver = function (numberToGuess, callbackChangeColor) {
-            var element = document.getElementById("result");
-            var end = document.createElement("center");
+            var element, end;
+            element = document.getElementById("result");
+
+            end = document.createElement("center");
             end.setAttribute("class", "end");
             end.innerHTML = "GAME OVER";
+
             element.appendChild(end);
             setTimeout(function () {
                 end.innerHTML = '';

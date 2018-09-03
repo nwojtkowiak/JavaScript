@@ -37,12 +37,9 @@ var controller = function () {
                 setTimeout(function () {
                     var gameResult = game.checkResult(resultLevel);
                     view.applyResultOfGame(gameResult, game.getPieces(), game.getNumberToGuess(),changeColor);
-
                 }, 1000);
             }
-
         };
-
 
     return {
         'startGame': startGame,
